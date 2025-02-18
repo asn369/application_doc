@@ -1,0 +1,48 @@
+[root@master ~]# cat /etc/slurm/slurm.conf
+ClusterName=cluster
+SlurmctldHost=master
+
+FirstJobId=1
+MaxJobId=67043328
+LaunchType=launch/slurm
+MailProg=/bin/mailq
+MpiDefault=none
+ProctrackType=proctrack/cgroup
+TaskPlugin=task/cgroup
+
+ReturnToService=1
+SlurmctldPidFile=/var/run/slurm/slurmctld.pid
+SlurmctldPort=6817
+SlurmdPidFile=/var/run/slurm/slurmd.pid
+SlurmdPort=6818
+SlurmdSpoolDir=/var/spool/slurm/d
+SlurmUser=slurm
+StateSaveLocation=/var/spool/slurm/slurmctld
+SwitchType=switch/none
+TmpFS=/tmp
+
+InactiveLimit=10
+KillWait=30
+MinJobAge=300
+SlurmctldTimeout=120
+SlurmdTimeout=300
+Waittime=0
+SchedulerType=sched/backfill
+SelectType=select/cons_tres
+AccountingStorageHost=master
+AccountingStoragePort=7031
+AccountingStorageType=accounting_storage/slurmdbd
+AccountingStorageUser=slurm
+AccountingStoreFlags=job_comment
+JobCompType=jobcomp/none
+JobContainerType=job_container/none
+JobAcctGatherFrequency=30
+JobAcctGatherType=jobacct_gather/none
+SlurmctldDebug=info
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmdDebug=info
+SlurmdLogFile=/var/log/slurm/slurmd.log
+
+Nodename=master NodeAddr=172.16.12.170 CPUs=16 Boards=1 SocketsPerBoard=1 CoresPerSocket=8 ThreadsPerCore=2 RealMemory=31490
+PartitionName=master Nodes=ALL Default=YES MaxTime=INFINITE State=UP
+PartitionName=low_master Nodes=master Shared=NO
