@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Remote SSH') {
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = 'user'
+                    remote.host = '189.179.200.128'
+                    remote.user = 'root'
+                    remote.password = 'netweb'
+                    remote.allowAnyHosts = true
+
+                    sshCommand remote: remote, command: "cat /etc/fstab"
+                    sshCommand remote: remote, command: "cat /etc/passwd"
+                    sshCommand remote: remote, command: 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+                    sshCommand remote: remote, command: "chmod +x ./kubectl"
+                    sshCommand remote: remote, command: "sudo mv ./kubectl /usr/local/bin/kubectl"
+                    sshCommand remote: remote, command: "kubectl version --client"
+                }
+            }
+        }
+    }
+}
