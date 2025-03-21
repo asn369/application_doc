@@ -1,0 +1,64 @@
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+wget https://elrepo.org/linux/elrepo/el9/x86_64/RPMS/elrepo-release-9.5-1.el9.elrepo.noarch.rpm
+rpm -ivh elrepo-release-9.5-1.el9.elrepo.noarch.rpm
+rm -rvf elrepo-release-9.5-1.el9.elrepo.noarch.rpm
+yum install -y kmod-drbd84 drbd84-utils
+
+ vim /etc/drbd.d/global_common.conf
+
+global {
+     usage-count yes;
+     minor-count 5;
+     dialog-refresh 1;
+  }
+  common {
+     disk {
+     }
+     net {
+     }
+     startup {
+     }
+     options {
+     }
+     handlers {
+     }
+  }
+
+
+vim /etc/drbd.d/nfsshare.res
+
+resource nfsshare {
+     disk {
+        on-io-error detach;
+        no-disk-flushes;
+        no-disk-barrier;
+        c-plan-ahead 0;
+        c-fill-target 24M;
+        c-min-rate 80M;
+        c-max-rate 720M;
+     }
+     net {
+        protocol C;
+        max-buffers 8000;
+        max-epoch-size 8000;
+        sndbuf-size 2M;
+        rcvbuf-size 2M;
+     }
+
+     on nfs-server1 {
+        address 10.0.0.5:7789; -----> Change the IP as per you IP address
+        device /dev/drbd1 ;
+        disk /dev/sdc; -----> Change the disk name based on the disk name detected in your machine
+        meta-disk internal;
+        
+     }
+     on nfs-server2 {
+        address 10.0.0.6:7789; -----> Change the IP as per you IP address
+        device /dev/drbd1 ;    
+        disk /dev/sdc; -----> Change the disk name based on the disk name detected in your machine
+        meta-disk internal;
+        
+     }
+
+
+
