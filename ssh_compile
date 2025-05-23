@@ -1,1 +1,20 @@
-
+git clone https://github.com/openssh/openssh-portable.git
+ sudo apt install autoconf
+ 2040  autoreconf
+ 2041  ./configure
+ 2042  ./configure --prefix=/opt/ssh
+ 2043  make 
+ 2044  apt install zlib
+ 2045  sudo apt install zlib
+ 2046  sudo apt-get install zlib1g-dev
+ 2047  make 
+ 2048  ./configure --prefix=/opt/ssh
+ 2049  apt install openssl
+ 2050  sudo apt install openssl
+ 2051  sudo apt install libcryto
+ 2052  sudo apt install libcrypto
+ 2053  sudo apt install libssl-dev
+ 2054  ./configure --prefix=/opt/ssh
+ 2055  make
+ 2056  make install
+ 2057  sudo make install
