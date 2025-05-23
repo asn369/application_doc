@@ -1,1 +1,5 @@
+git clone https://github.com/intel/intel-cmt-cat.git
+cd intel-cmt-cat/
+make 
+make install 
 
