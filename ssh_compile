@@ -18,3 +18,4 @@ git clone https://github.com/openssh/openssh-portable.git
  2055  make
  2056  make install
  2057  sudo make install
+https://git.kernel.org/pub/scm/linux/kernel/git
