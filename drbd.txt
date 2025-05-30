@@ -1,3 +1,11 @@
+The best way to get LINBIT's software installed on your machines is to download a small python helper from here: https://my.linbit.com/linbit-manage-node.py
+cd /tmp
+wget 'https://my.linbit.com/linbit-manage-node.py'
+#on RHEL/CentOS use curl instead 
+#curl -O 'https://my.linbit.com/linbit-manage-node.py'
+chmod u+x linbit-manage-node.py
+./linbit-manage-node.py
+
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 wget https://elrepo.org/linux/elrepo/el9/x86_64/RPMS/elrepo-release-9.5-1.el9.elrepo.noarch.rpm
 rpm -ivh elrepo-release-9.5-1.el9.elrepo.noarch.rpm
