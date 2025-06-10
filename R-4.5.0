@@ -3,5 +3,6 @@ yum install -y readline-devel
 yum install -y libX11-devel libXt-devel libXext-devel libSM-devel libICE-devel
 yum install -y pcre2-devel
 yum install -y libcurl-devel
-  
+ ./configure --prefix=/opt/apps/R-4.5
+ 
 
