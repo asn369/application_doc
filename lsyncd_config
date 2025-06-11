@@ -3,7 +3,7 @@ Last metadata expiration check: 2:34:36 ago on Wed Jun 11 10:13:20 2025.
 Package lsyncd-2.2.2-9.el8.x86_64 is already installed.
 
 systemctl status lsyncd.service 
-cat /etc/lsyncd.conf 
+cat /etc/lsyncd.conf    ## inthis is done in master server 
 ----
 -- User configuration file for lsyncd.
 --
@@ -21,7 +21,7 @@ settings {
 sync {
    default.rsyncssh,
    source="/nfs_nfpga",
-   host="root@192.168.30.233",
+   host="root@192.168.30.233",  ## ip of slave server
    targetdir="/nfs_nfpga2",
    rsync = {
      archive = true,
