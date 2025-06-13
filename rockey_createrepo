@@ -1,0 +1,19 @@
+ find /opt/repos/rocky8.7 -type f -name '*drpm*.rpm'
+/opt/repos/rocky8.7/AppStream/Packages/d/drpm-0.4.1-3.el8.i686.rpm
+/opt/repos/rocky8.7/AppStream/Packages/d/drpm-0.4.1-3.el8.x86_64.rpm
+
+find /opt/repos/rocky8.7 -type f -name '*createrepo*.rpm'
+/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-devel-0.17.7-6.el8.i686.rpm
+/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-libs-0.17.7-6.el8.x86_64.rpm
+/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-devel-0.17.7-6.el8.x86_64.rpm
+/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-0.17.7-6.el8.x86_64.rpm
+/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-libs-0.17.7-6.el8.i686.rpm
+/opt/repos/rocky8.7/AppStream/Packages/p/python3-createrepo_c-0.17.7-6.el8.x86_64.rpm
+
+
+sudo rpm -ivh \
+/opt/repos/rocky8.7/AppStream/Packages/d/drpm-0.4.1-3.el8.x86_64.rpm \
+/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-libs-0.17.7-6.el8.x86_64.rpm \
+/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-0.17.7-6.el8.x86_64.rpm \
+/opt/repos/rocky8.7/AppStream/Packages/p/python3-createrepo_c-0.17.7-6.el8.x86_64.rpm
+
