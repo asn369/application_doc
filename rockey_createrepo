@@ -1,19 +1,43 @@
- find /opt/repos/rocky8.7 -type f -name '*drpm*.rpm'
-/opt/repos/rocky8.7/AppStream/Packages/d/drpm-0.4.1-3.el8.i686.rpm
-/opt/repos/rocky8.7/AppStream/Packages/d/drpm-0.4.1-3.el8.x86_64.rpm
 
-find /opt/repos/rocky8.7 -type f -name '*createrepo*.rpm'
-/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-devel-0.17.7-6.el8.i686.rpm
-/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-libs-0.17.7-6.el8.x86_64.rpm
-/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-devel-0.17.7-6.el8.x86_64.rpm
-/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-0.17.7-6.el8.x86_64.rpm
-/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-libs-0.17.7-6.el8.i686.rpm
-/opt/repos/rocky8.7/AppStream/Packages/p/python3-createrepo_c-0.17.7-6.el8.x86_64.rpm
+#!/bin/bash
 
+set -e
 
-sudo rpm -ivh \
-/opt/repos/rocky8.7/AppStream/Packages/d/drpm-0.4.1-3.el8.x86_64.rpm \
-/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-libs-0.17.7-6.el8.x86_64.rpm \
-/opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-0.17.7-6.el8.x86_64.rpm \
-/opt/repos/rocky8.7/AppStream/Packages/p/python3-createrepo_c-0.17.7-6.el8.x86_64.rpm
+echo "📦 Installing createrepo dependencies..."
 
+# Step 1: Install required RPMs for createrepo_c
+rpm -ivh \
+  /opt/repos/rocky8.7/AppStream/Packages/d/drpm-0.4.1-3.el8.x86_64.rpm \
+  /opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-libs-0.17.7-6.el8.x86_64.rpm \
+  /opt/repos/rocky8.7/AppStream/Packages/c/createrepo_c-0.17.7-6.el8.x86_64.rpm \
+  /opt/repos/rocky8.7/AppStream/Packages/p/python3-createrepo_c-0.17.7-6.el8.x86_64.rpm
+
+echo "✅ createrepo_c installed."
+
+# Step 2: Run createrepo on the whole /opt/repos
+echo "🔧 Running createrepo on /opt/repos ..."
+createrepo /opt/repos
+
+# Step 3: Create the YUM repo config
+echo "📝 Writing /etc/yum.repos.d/local.repo ..."
+cat > /etc/yum.repos.d/local.repo << EOF
+[BaseOS]
+name=Rocky Linux 8.7 - BaseOS
+baseurl=file:///opt/repos/rocky8.7/BaseOS
+enabled=1
+gpgcheck=0
+
+[AppStream]
+name=Rocky Linux 8.7 - AppStream
+baseurl=file:///opt/repos/rocky8.7/AppStream
+enabled=1
+gpgcheck=0
+EOF
+
+# Step 4: Clean and refresh DNF
+echo "🧹 Cleaning DNF and refreshing cache..."
+dnf clean all
+dnf makecache
+dnf repolist
+
+echo "🎉 Done! Local repo is ready at /opt/repos"
