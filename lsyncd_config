@@ -33,3 +33,52 @@ sync {
    }
 }
 
+
+
+
+
+----
+-- User configuration file for lsyncd.
+--
+-- Simple example for default rsync, but executing moves through on the target.
+--
+-- For more examples, see /usr/share/doc/lsyncd*/examples/
+-- 
+
+settings {
+   logfile = "/var/log/lsyncd.log",
+   statusFile = "/var/log/lsyncd-status.log",
+   statusInterval = 20,
+   maxProcesses = 1,
+   insist = true
+   }
+
+serverList = {
+ "brazil1:/static/",
+ "brazil4:/static/",
+ "brazil5:/static/",
+ "brazil6:/static/",
+ "brazil8:/static/",
+ "brazil9:/static/",
+ "brazil10:/static/",
+ "brazil11:/static/",
+ "brazil13:/static/",
+ "brazil14:/static/",
+ "brazil15:/static/",
+ "brazil16:/static/",
+}
+
+for _, server in ipairs( serverList ) do
+
+	sync{
+   		default.rsync, 
+   		source="/static/",
+   		target=server,
+   		rsync = {
+     			archive = true,
+     			compress = true,
+     			whole_file = false
+   			},
+	}
+end
+
