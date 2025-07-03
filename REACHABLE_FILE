@@ -1,1 +1,28 @@
 
+#!/bin/bash
+
+# Input and output files
+IP_FILE="ip_list.txt"
+REACHABLE_FILE="reachable_ips.txt"
+
+# Clear the output file
+> "$REACHABLE_FILE"
+
+# Check if input file exists
+if [[ ! -f "$IP_FILE" ]]; then
+    echo "IP file '$IP_FILE' not found!"
+    exit 1
+fi
+
+echo "Checking which IPs are reachable... (saving only reachable ones to $REACHABLE_FILE)"
+
+while read -r ip; do
+    [[ -z "$ip" ]] && continue  # skip blank lines
+
+    if ping -c 1 -W 1 "$ip" &> /dev/null; then
+        echo "$ip is Reachable"
+        echo "$ip" >> "$REACHABLE_FILE"
+    else
+        echo "$ip is Unreachable"
+    fi
+done < "$IP_FILE"
