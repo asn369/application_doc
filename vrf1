@@ -1,0 +1,15 @@
+cat /etc/iproute2/rt_tables 
+# reserved values
+255	local
+254	main
+253	default
+0	unspec
+# local
+#1	inr.ruhep
+1000    vrf1
+
+ip rule show
+0:	from all lookup local
+32765:	from 10.252.130.26 lookup vrf1
+32766:	from all lookup main
+32767:	from all lookup default
