@@ -1,0 +1,5 @@
+uname -r 
+grubby --update-kernel=/boot/vmlinuz-4.18.0-425.3.1.el8.x86_64 \
+--args="isolcpus=1-7, nohz_full=1-7, rcu_nocbs=1-7, nomdmonddf nomdmonisw quiet nmi_watchdog=0 \
+intel_idle.max_cstate=0 processor.max_cstate=0 transparent_hugepage=never idle=poll pcie_aspm=off \ 
+hpet=disabled noht nohalt nosoftlockup mce=ignore_ce tsc=reliable default_hugepagesz=1048576kB audit=0 cpuidle.off=1 skew_tick=1 rcu_nocb_poll"
