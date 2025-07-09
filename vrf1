@@ -13,3 +13,12 @@ ip rule show
 32765:	from 10.252.130.26 lookup vrf1
 32766:	from all lookup main
 32767:	from all lookup default
+
+# Set manual IP config (replace IP with yours)
+nmcli con mod enp9s0 ipv4.method manual ipv4.addresses 10.254.141.100/24 ipv4.gateway ""
+
+# Add route to gateway (scope link) in table vrf1
+nmcli con mod enp9s0 +ipv4.routes "10.254.141.186/32 0.0.0.0 100"
+
+# Add default route via gateway in table vrf1
+nmcli con mod enp9s0 +ipv4.routes "0.0.0.0/0 10.254.141.186 100"
