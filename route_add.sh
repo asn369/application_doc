@@ -58,3 +58,7 @@ for i in {15..254}; do
   ' && echo "Success on $IP" || echo "Failed on $IP"
 done
 
+
+for i in {15..254}; do sshpass -p 'root@321' ssh -o ConnectTimeout=2 -o StrictHostKeyChecking=no root@192.168.1.$i 'ip route add 13.250.184.165/32 via 192.168.1.10 && ip route add 13.251.25.238/32 via 192.168.1.10 && ip route add 14.143.239.122/32 via 192.168.1.10' && echo "Success on 192.168.1.$i" || echo "Failed on 192.168.1.$i"; done
+
+
