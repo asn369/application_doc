@@ -40,3 +40,21 @@ for i in {15..254}; do
   fi
 done
 
+
+
+
+
+#!/bin/bash
+
+PASSWORD="root@321"
+
+for i in {15..254}; do
+  IP="192.168.1.$i"
+  echo "Connecting to $IP..."
+  sshpass -p "$PASSWORD" ssh -o ConnectTimeout=2 -o StrictHostKeyChecking=no root@$IP '
+    ip route add 13.250.184.165/32 via 192.168.1.10
+    ip route add 13.251.25.238/32 via 192.168.1.10
+    ip route add 14.143.239.122/32 via 192.168.1.10
+  ' && echo "Success on $IP" || echo "Failed on $IP"
+done
+
