@@ -1,1 +1,63 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+net.ipv4.ip_forward = 1
+sudo sysctl -p
+sudo openvpn --config test.ovpn
+
+vim test.ovpn
+client
+dev tun
+proto udp
+remote <server-public-ip> 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+<ca>
+-----BEGIN CERTIFICATE-----
+... CA certificate content ...
+-----END CERTIFICATE-----
+</ca>
+<cert>
+-----BEGIN CERTIFICATE-----
+... client certificate ...
+-----END CERTIFICATE-----
+</cert>
+<key>
+-----BEGIN PRIVATE KEY-----
+... client private key ...
+-----END PRIVATE KEY-----
+</key>
+<tls-auth>
+-----BEGIN OpenVPN Static key V1-----
+... ta.key content ...
+-----END OpenVPN Static key V1-----
+</tls-auth>
+
+key-direction 1
+
+
