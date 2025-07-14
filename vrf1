@@ -21,14 +21,13 @@ ip rule show
 
 # Set manual IP config (replace IP with yours)
 nmcli con mod enp9s0 ipv4.method manual ipv4.addresses 10.254.141.100/24 ipv4.gateway ""
-
 # Add route to gateway (scope link) in table vrf1
 nmcli con mod enp9s0 +ipv4.routes "10.254.141.186/32 0.0.0.0 100"
-
 # Add default route via gateway in table vrf1
 nmcli con mod enp9s0 +ipv4.routes "0.0.0.0/0 10.254.141.186 100"
 
-
+nmcli connection modify enp1s0 +ipv4.routes "10.254.141.186/32"
+nmcli connection modify enp1s0 +ipv4.routes "0.0.0.0/0 10.254.141.186 1000"
 cat /etc/sysconfig/network-scripts/route-enp1s0 
 ADDRESS0=10.254.141.186
 NETMASK0=255.255.255.255
