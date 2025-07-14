@@ -1,3 +1,7 @@
+ip route add 10.254.141.186/32 dev enp8s0 table 1000 
+[root@brazil9 trading]# ip route add default via 10.254.141.186 dev enp8s0 table 1000 
+[root@brazil9 trading]# /usr/sbin/arp -i enp8s0 -s 10.254.141.186 00:de:fb:e0:6d:7c
+
 cat /etc/iproute2/rt_tables 
 # reserved values
 255	local
