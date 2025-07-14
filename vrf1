@@ -2,6 +2,7 @@ ip route add 10.254.141.186/32 dev enp8s0 table 1000
 ip route add default via 10.254.141.186 dev enp8s0 table 1000 
  /usr/sbin/arp -i enp8s0 -s 10.254.141.186 00:de:fb:e0:6d:7c
 
+nmcli con add type ethernet ifname enp1s0 con-name vrf1   ipv4.addresses 10.252.130.28/26   ipv4.gateway 10.254.141.186   ipv4.method manual
 cat /etc/iproute2/rt_tables 
 # reserved values
 255	local
