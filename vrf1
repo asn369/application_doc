@@ -22,3 +22,35 @@ nmcli con mod enp9s0 +ipv4.routes "10.254.141.186/32 0.0.0.0 100"
 
 # Add default route via gateway in table vrf1
 nmcli con mod enp9s0 +ipv4.routes "0.0.0.0/0 10.254.141.186 100"
+
+
+cat /etc/sysconfig/network-scripts/route-enp1s0 
+ADDRESS0=10.254.141.186
+NETMASK0=255.255.255.255
+METRIC0=1000
+ADDRESS1=0.0.0.0
+NETMASK1=0.0.0.0
+GATEWAY1=10.254.141.186
+METRIC1=1000
+
+ cat /etc/sysconfig/network-scripts/route-enp2s0 
+10.254.141.186/32  dev enp2s0
+179.127.210.0/23 via 10.254.141.186  dev enp2s0
+179.127.212.0/22 via 10.254.141.186  dev enp2s0
+179.127.220.0/23 via 10.254.141.186  dev enp2s0
+179.127.222.0/23 via 10.254.141.186  dev enp2s0
+179.127.216.0/22 via 10.254.141.186 dev enp2s0
+177.54.208.0/23 via 10.254.141.186 dev enp2s0
+177.54.210.0/24 via 10.254.141.186 dev enp2s0
+177.54.216.0/24 via 10.254.141.186 dev enp2s0
+177.54.221.0/24 via 10.254.141.186 dev enp2s0
+177.54.223.0/24 via 10.254.141.186 dev enp2s0
+200.19.49.0/24 via 10.254.141.186 dev enp2s0
+200.19.50.0/23 via 10.254.141.186 dev enp2s0
+200.19.54.0/24 via 10.254.141.186 dev enp2s0
+200.19.55.0/24 via 10.254.141.186 dev enp2s0
+200.19.57.0/24 via 10.254.141.186 dev enp2s0
+200.19.61.0/24 via 10.254.141.186 dev enp2s0
+179.127.208.0/27 via 10.254.141.186  dev enp2s0
+179.127.208.64/27 via 10.254.141.186 dev enp2s0
+
