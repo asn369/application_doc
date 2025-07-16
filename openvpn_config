@@ -10,7 +10,7 @@ cd ~/easy-rsa
 ./easyrsa gen-req server nopass
 ./easyrsa sign-req server server
 ./easyrsa gen-dh
-openvpn --genkey --secret ta.key
+openvpn --genkey secret ta.key
 sudo cp pki/ca.crt pki/private/server.key pki/issued/server.crt pki/dh.pem ta.key /etc/openvpn/server/
 
 sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
