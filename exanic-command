@@ -1,1 +1,2 @@
 
+nohup /usr/bin/exanic-clock-sync exanic0:host exanic1:host > /var/log/exanic-sync.log 2>&1 &
