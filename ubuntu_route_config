@@ -1,1 +1,80 @@
 
+ cat /etc/network/interfaces
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto eno1 
+iface eno1 inet static
+
+	address 10.85.12.3
+	netmask 255.255.255.128
+	network 10.85.12.0
+	broadcast 10.85.12.127
+	gateway 10.85.12.1
+	dns-nameservers 8.8.8.8 8.8.4.4
+	up route add -net 10.0.0.0 netmask 255.0.0.0 gw 10.85.12.1
+	up route add -net 172.31.0.0 netmask 255.255.255.128 gw 10.85.12.1
+	up route add -net 13.228.39.14 netmask 255.255.255.255 gw 10.85.12.1
+	up route add -net 200.19.60.0 netmask 255.255.255.0 gw 10.85.12.1
+	up route add -net 233.252.11.0 netmask 255.255.255.0 gw 10.85.12.1
+	up ip route add 10.19.11.128/27 via 10.85.12.12 dev eno1
+	up ip route add 192.168.10.15/32 via 10.85.12.12 dev eno1
+
+auto enp94s0f0
+iface enp94s0f0 inet static
+	address 10.252.130.10
+	netmask 255.255.255.192
+	hwaddress ether fc:bd:67:e8:e3:cf
+	post-up /sbin/ethtool -C enp94s0f0 adaptive-rx off
+	post-up /sbin/ethtool -C enp94s0f0 rx-usecs 0
+	post-up /sbin/ethtool -G enp94s0f0 rx 4096		
+
+up route add -host 10.254.141.186  dev enp94s0f0	
+up ip route add 179.127.210.0/23 via 10.254.141.186  dev enp94s0f0
+up ip route add 179.127.2120/22 via 10.254.141.186  dev enp94s0f0
+up ip route add 179.127.220.0/23 via 10.254.141.186  dev enp94s0f0
+up ip route add 179.127.222.0/23 via 10.254.141.186  dev enp94s0f0 
+up ip route add 179.127.216.0/22 via 10.254.141.186 dev enp94s0f0 
+up ip route add 177.54.208.0/23 via 10.254.141.186 dev enp94s0f0 
+up ip route add 177.54.210.0/24 via 10.254.141.186 dev enp94s0f0
+up ip route add 177.54.216.0/24 via 10.254.141.186 dev enp94s0f0 
+up ip route add 177.54.221.0/24 via 10.254.141.186 dev enp94s0f0 
+up ip route add 177.54.223.0/24 via 10.254.141.186 dev enp94s0f0 
+up ip route add 200.19.49.0/24 via 10.254.141.186 dev enp94s0f0 
+up ip route add 200.19.50.0/23 via 10.254.141.186 dev enp94s0f0 
+up ip route add 200.19.54.0/24 via 10.254.141.186 dev enp94s0f0 
+up ip route add 200.19.55.0/24 via 10.254.141.186 dev enp94s0f0 
+up ip route add 200.19.61.0/24 via 10.254.141.186 dev enp94s0f0
+up ip route add 179.127.208.0/27 via 10.254.141.186  dev enp94s0f0
+up ip route add 179.127.208.64/27 via 10.254.141.186 dev enp94s0f0
+
+#auto enp94s0f1
+#iface enp94s0f1 inet static
+#	address 10.252.193.181
+#	netmask 255.255.255.192
+#post-up /sbin/ethtool -C enp94s0f1 adaptive-rx off
+#        post-up /sbin/ethtool -C enp94s0f1 rx-usecs 0
+#        post-up /sbin/ethtool -G enp94s0f1 rx 4096
+#
+#up ip route add 179.127.208.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 179.127.210.0/24 via 10.252.193.131 dev enp94s0f1  metric 1 
+#up ip route add 179.127.211.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 179.127.212.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 179.127.213.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 179.127.215.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 177.54.208.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 177.54.209.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 177.54.210.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 177.54.216.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 177.54.223.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 200.19.54.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 200.19.55.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 200.19.59.0/24 via 10.252.193.131 dev enp94s0f1  metric 1
+#up ip route add 233.252.0.0/16 via 10.252.193.131 dev enp94s0f1 metric 1
+#up ip route add 233.252.0.0/16 via 10.252.193.131 dev enp94s0f1 metric 1
