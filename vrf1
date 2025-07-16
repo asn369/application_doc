@@ -1,3 +1,5 @@
+ip route add 10.254.141.186 via 10.252.130.1 dev enp1s0
+
 ip route add 10.254.141.186/32 dev enp8s0 table 1000 
 ip route add default via 10.254.141.186 dev enp8s0 table 1000 
  /usr/sbin/arp -i enp8s0 -s 10.254.141.186 00:de:fb:e0:6d:7c
