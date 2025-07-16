@@ -1,1 +1,85 @@
 
+ cat .bash_aliases 
+nseServers=100
+nsecoServers=100
+bseServers=100
+mcxServers=100
+trServers=100
+brServers=100
+lmeServers=100
+fpgaServers=100
+nfpgaServers=100
+sgxServers=100
+shfeServers=100
+i=1
+while [ $i -le $nseServers ];
+do
+    alias "nse$i"="ssh nse$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $nsecoServers ];
+do
+    alias "nseco$i"="ssh nseco$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $bseServers ];
+do
+    alias "bse$i"="ssh bse$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $mcxServers ];
+do
+    alias "mcx$i"="ssh mcx$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $mcxServers ];
+do
+    alias "mcxdr$i"="ssh mcxdr$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $trServers ];
+do
+    alias "tr$i"="ssh turkey$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $brServers ];
+do
+    alias "br$i"="ssh brazil$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $fpgaServers ];
+do
+    alias "fpga$i"="ssh fpga$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $nfpgaServers ];
+do
+    alias "nfpga$i"="ssh nfpga$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $lmeServers ];
+do
+    alias "lme$i"="ssh lme$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $sgxServers ];
+do
+    alias "sgx$i"="ssh sgx$i"
+    i=`expr $i + 1`
+done
+i=1
+while [ $i -le $shfeServers ];
+do
+    alias "shfe$i"="ssh shfe$i"
+    i=`expr $i + 1`
+done
