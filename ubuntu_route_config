@@ -12,19 +12,19 @@ iface lo inet loopback
 auto eno1 
 iface eno1 inet static
 
-	address 10.85.12.3
+	address 10.10.10.3
 	netmask 255.255.255.128
-	network 10.85.12.0
-	broadcast 10.85.12.127
-	gateway 10.85.12.1
+	network 10.10.10.0
+	broadcast 10.10.10.127
+	gateway 10.10.10.1
 	dns-nameservers 8.8.8.8 8.8.4.4
-	up route add -net 10.0.0.0 netmask 255.0.0.0 gw 10.85.12.1
-	up route add -net 172.31.0.0 netmask 255.255.255.128 gw 10.85.12.1
-	up route add -net 13.228.39.14 netmask 255.255.255.255 gw 10.85.12.1
-	up route add -net 200.19.60.0 netmask 255.255.255.0 gw 10.85.12.1
-	up route add -net 233.252.11.0 netmask 255.255.255.0 gw 10.85.12.1
-	up ip route add 10.19.11.128/27 via 10.85.12.12 dev eno1
-	up ip route add 192.168.10.15/32 via 10.85.12.12 dev eno1
+	up route add -net 10.0.0.0 netmask 255.0.0.0 gw 10.10.10.1
+	up route add -net 172.31.0.0 netmask 255.255.255.128 gw 10.10.10.1
+	up route add -net 13.228.39.14 netmask 255.255.255.255 gw 10.10.10.1
+	up route add -net 200.19.60.0 netmask 255.255.255.0 gw 10.10.10.1
+	up route add -net 233.252.11.0 netmask 255.255.255.0 gw 10.10.10.1
+	up ip route add 10.19.11.128/27 via 10.10.10.12 dev eno1
+	up ip route add 192.168.10.15/32 via 10.10.10.12 dev eno1
 
 auto enp94s0f0
 iface enp94s0f0 inet static
