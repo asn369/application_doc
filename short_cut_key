@@ -1,3 +1,8 @@
+dconf reset -f /org/gnome/desktop/wm/keybindings/
+dconf reset -f /org/gnome/shell/keybindings/
+dconf reset -f /org/gnome/mutter/keybindings/
+dconf reset -f /org/gnome/settings-daemon/plugins/media-keys/
+
 sudo apt install libinput-tools
 sudo libinput debug-events  //This will show real-time input events, such as key presses and mouse movements 
 
