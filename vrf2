@@ -1,0 +1,3 @@
+ip rule add from 10.252.130.26 table vrf1
+sudo ip route add 10.254.141.186 dev enp8s0 table vrf1 scope link
+sudo ip route add default via 10.254.141.186 dev enp8s0 table vrf1
