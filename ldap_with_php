@@ -1,3 +1,5 @@
+sudo apt install slapd ldap-utils
+or
 dnf install httpd php phpldapadmin openldap openldap-clients -y
 vim /etc/phpldapadmin/config.php
 $servers->setValue('server','host','192.168.122.68');
@@ -22,5 +24,11 @@ export PATH=/opt/openldap/bin:$PATH
 export PATH=/opt/openldap/sbin:$PATH
 ls /opt/openldap-2.6.9/
 bin  etc  include  lib  libexec  sbin  share  var
-/etc/systemd/system/slapd-custom.service
+
+nohup /opt/openldap-2.6.9/libexec/slapd -f /opt/openldap-2.6.9/etc/openldap/slapd.conf -h "ldap:/// ldapi:///" &
+or 
+nohup /opt/openldap-2.6.9/libexec/slapd -F /opt/openldap-2.6.9/etc/openldap/slapd.d -h "ldap:/// ldapi:///" &
+
+vim /etc/systemd/system/slapd-custom.service
+
      
