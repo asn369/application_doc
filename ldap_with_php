@@ -22,5 +22,5 @@ export PATH=/opt/openldap/bin:$PATH
 export PATH=/opt/openldap/sbin:$PATH
 ls /opt/openldap-2.6.9/
 bin  etc  include  lib  libexec  sbin  share  var
-
+/etc/systemd/system/slapd-custom.service
      
