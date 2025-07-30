@@ -1,1 +1,15 @@
+dnf install httpd php phpldapadmin openldap openldap-clients -y
+vim /etc/phpldapadmin/config.php
+$servers->setValue('server','host','192.168.122.68');
+vim /etc/httpd/conf.d/phpldapadmin.conf
+  Require local //change this by "Require all granted"
 
+# RHEL/CentOS
+systemctl restart httpd
+# Debian/Ubuntu
+systemctl restart apache2
+
+http://<your-server-ip>/phpldapadmin
+
+  
+     
