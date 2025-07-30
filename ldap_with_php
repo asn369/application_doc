@@ -12,5 +12,15 @@ systemctl restart apache2  # Debian/Ubuntu
 
 http://<your-server-ip>/phpldapadmin
 
-  
+ wget https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.9.tgz
+tar -xvf openldap-2.6.9.tgz 
+./configure --prefix=/opt/openldap-2.6.9
+make -j8
+make -j8 install
+ cat /etc/profile.d/openldap.sh
+export PATH=/opt/openldap/bin:$PATH
+export PATH=/opt/openldap/sbin:$PATH
+ls /opt/openldap-2.6.9/
+bin  etc  include  lib  libexec  sbin  share  var
+
      
