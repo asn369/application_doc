@@ -49,5 +49,29 @@ WantedBy=multi-user.target
 Alias=openldap.service
 or 
 cat /etc/systemd/system/slapd-custom.service
+[Unit]
+Description=OpenLDAP Server Daemon
+After=syslog.target network-online.target
+Documentation=man:slapd
+Documentation=man:slapd-config
+Documentation=man:slapd-hdb
+Documentation=man:slapd-mdb
+Documentation=file:///usr/share/doc/openldap-servers/guide.html
+
+[Service]
+Type=forking
+#ExecStartPre=/usr/libexec/openldap/check-config.sh
+ExecStart=/opt/openldap-2.6.9/libexec/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///"
+
+[Install]
+WantedBy=multi-user.target
+Alias=openldap.service
+sudo sed -n '72p' /opt/openldap-2.6.9/etc/openldap/slapd.conf
+sudo mkdir -p /opt/openldap-2.6.9/var/openldap-data
+sudo chown -R ldap:ldap /opt/openldap-2.6.9/var/openldap-data
+sudo chown -R ldap:ldap /opt/openldap-2.6.9/var/run
+
+
+
 
      
