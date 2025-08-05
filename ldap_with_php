@@ -95,6 +95,32 @@ SASL SSF: 0
 modifying entry "olcDatabase={2}mdb,cn=config"
 
 
+ldapadd -x -D "cn=admin,dc=my-domain,dc=com" -W -f base.ldif
+Enter LDAP Password: 
+adding new entry "dc=my-domain,dc=com"
+adding new entry "ou=People,dc=my-domain,dc=com"
+adding new entry "ou=Groups,dc=my-domain,dc=com"
+
+cat base.ldif 
+dn: dc=my-domain,dc=com
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: My Organization
+dc: my-domain
+
+dn: ou=People,dc=my-domain,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Groups,dc=my-domain,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: Groups
+
+
+
 
 
 
