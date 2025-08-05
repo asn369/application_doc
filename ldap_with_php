@@ -119,6 +119,16 @@ objectClass: top
 objectClass: organizationalUnit
 ou: Groups
 
+ cat set-admin.ldif 
+dn: olcDatabase={2}mdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: cn=admin,dc=my-domain,dc=com
+-
+replace: olcRootPW
+olcRootPW: {SSHA}LdpF2thPU6MZBLihpy0tV/5FyYtFGSkn
+
+
 
 
 
