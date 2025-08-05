@@ -72,7 +72,7 @@ sudo chown -R ldap:ldap /opt/openldap-2.6.9/var/openldap-data
 sudo chown -R ldap:ldap /opt/openldap-2.6.9/var/run
 
 
-New config
+New setup:-
 
 wget https://dl.rockylinux.org/pub/rocky/8/PowerTools/x86_64/os/Packages/o/openldap-servers-2.4.46-21.el8_10.x86_64.rpm
 yum install ./openldap-servers-2.4.46-21.el8_10.x86_64.rpm 
@@ -87,6 +87,14 @@ dn: olcDatabase={2}mdb,cn=config
 changetype: modify
 replace: olcRootPW
 olcRootPW: {SSHA}LdpF2thPU6MZBLihpy0tV/5FyYtFGSkn
+
+ldapmodify -Y EXTERNAL -H ldapi:/// -f set-rootpw.ldif
+SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+modifying entry "olcDatabase={2}mdb,cn=config"
+
+
 
 
 
