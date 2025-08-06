@@ -1,0 +1,33 @@
+cat /etc/chrony.conf   ///master
+# NTP master configuration
+# Provide time to clients in the local network
+server 10.111.3.59
+# Local fallback stratum (lower = higher priority; 8 is common for master)
+local stratum 8
+# Save clock drift
+driftfile /var/lib/chrony/drift
+# Step clock if offset >1s on startup
+makestep 1.0 3
+# Sync hardware RTC with system time
+rtcsync
+# Enable hardware timestamping on the specified NIC (eno1)
+hwtimestamp eno1
+# Allow access from client subnet
+allow 10.85.12.0/25
+# Optional: NTP authentication keyfile (if used)
+keyfile /etc/chrony.keys
+# Use TAI-UTC offset from timezone database
+leapsectz right/UTC
+# Logging (keep for diagnostics)
+logdir /var/log/chrony
+log measurements statistics tracking
+# Disable unused or commented features
+#refclock PHC /dev/ptp0 tai   # Not needed if not using ptp
+#hwtimestamp *                # Already specifying eno1
+
+cat /etc/chrony.conf  ///client
+server <MASTER_IP> iburst minpoll 4 maxpoll 4
+makestep 0.1 3
+hwtimestamp *
+logdir /var/log/chrony
+log measurements statistics tracking
