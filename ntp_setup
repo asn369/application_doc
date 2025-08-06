@@ -26,7 +26,7 @@ log measurements statistics tracking
 #hwtimestamp *                # Already specifying eno1
 
 cat /etc/chrony.conf  ///client
-server <MASTER_IP> iburst minpoll 4 maxpoll 4
+server <MASTER_IP> iburst minpoll 4 maxpoll 4   //minpoll 4 maxpoll 4 ==16 second
 makestep 0.1 3
 hwtimestamp *
 logdir /var/log/chrony
