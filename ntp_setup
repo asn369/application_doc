@@ -25,6 +25,12 @@ log measurements statistics tracking
 #refclock PHC /dev/ptp0 tai   # Not needed if not using ptp
 #hwtimestamp *                # Already specifying eno1
 
+
+# if we used 443-NTS is set Use NTP servers with NTS over port 443
+server time.cloudflare.com iburst nts
+server time.google.com iburst nts
+server nts.netnod.se iburst nts
+
 cat /etc/chrony.conf  ///client
 server <MASTER_IP> iburst minpoll 4 maxpoll 4   //minpoll 4 maxpoll 4 ==16 second
 makestep 0.1 3
