@@ -1,0 +1,70 @@
+#version=RHEL8
+# Reboot after installation
+reboot
+# Use graphical install
+graphical
+
+repo --name="BaseOS" --baseurl=file:///run/install/repo/BaseOS
+repo --name="AppStream" --baseurl=file:///run/install/repo/AppStream
+repo --name="AppStream" --baseurl=file:///run/install/sources/mount-0000-hdd-device/AppStream
+
+%post --nochroot
+# 1. echo ">>> Restoring system from squashfs..." >> /tmp/post.log
+unsquashfs -f -d /mnt/sysimage /run/install/repo/LiveOS/rootfs.squashfs >> /tmp/post.log 2>&1
+%end
+
+%post --nochroot
+#Create directories inside installed system
+mkdir -p /mnt/sysimage/scripts/util
+touch /mnt/sysimage/var/log/kern.log
+touch /mnt/sysimage/var/log/syslog
+chmod 644 /mnt/sysimage/var/log/kern.log
+chmod 644 /mnt/sysimage/var/log/syslog
+
+# 2. Load exanic driver
+#chroot /mnt/sysimage /sbin/modprobe exanic
+
+# 4. Configure hugepages
+echo 48 > /mnt/sysimage/sys/devices/system/node/node0/hugepages/hugepages-1048576kB/nr_hugepages
+%end
+
+%packages
+@^minimal-environment
+kexec-tools
+
+%end
+
+# Keyboard layouts
+keyboard --vckeymap=in-eng --xlayouts='in (eng)'
+# System language
+lang en_IN.UTF-8
+
+# Network information
+network  --hostname=localhost.localdomain
+
+# Use hard drive installation media
+harddrive --dir= --partition=/dev/sda2
+
+# Run the Setup Agent on first boot
+firstboot --enable
+
+ignoredisk --only-use=nvme0n1
+# System bootloader configuration
+bootloader --append="rhgb quiet crashkernel=auto" --location=mbr --boot-drive=nvme0n1
+# Partition clearing information
+clearpart --all --initlabel
+# Disk partitioning information
+part /boot --fstype="ext4" --ondisk=nvme0n1 --size=20480
+part /home --fstype="ext4" --ondisk=nvme0n1 --size=40960
+part /boot/efi --fstype="efi" --ondisk=nvme0n1 --size=1024 --fsoptions="defaults,uid=0,gid=0,umask=077,shortname=winnt"
+part / --fstype="ext4" --ondisk=nvme0n1 --size=891404
+
+# System timezone
+timezone Asia/Kolkata --isUtc --nontp
+
+# Root password
+rootpw 123
+
+%addon com_redhat_kdump --enable --reserve-mb='auto'
+
+%end
