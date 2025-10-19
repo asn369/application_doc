@@ -1,0 +1,17 @@
+ pmc 'get PARENT_DATA_SET' 'get CURRENT_DATA_SET' 'get PORT_DATA_SET' 'get TIME_STATUS_NP' -i eth0
+ ptp4l -i eth0 -f /etc/ptp4l.conf -m -l 7
+ phc2sys -s /dev/ptp0 -f /etc/ptp4l.conf -m
+
+cat  /usr/lib/systemd/system/ptp4l.service
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/ptp4l
+ExecStart=/usr/sbin/ptp4l $OPTIONS             # OPTIONS === /etc/sysconfig/ptp4l
+#ExecStart=/usr/sbin/ptp4l -f /etc/ptp4l.conf -i eth0
+
+cat /etc/sysconfig/ptp4l
+OPTIONS="-f /etc/ptp4l.conf -i eth0"    
+
+ip link add name ptp-test type dummy
+ip link set ptp-test address 02:11:22:33:44:55
+ip link set ptp-test up
