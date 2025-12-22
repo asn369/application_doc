@@ -1,0 +1,7 @@
+Download (with dependencies):-
+python3 -m pip download --only-binary=:all: \
+-r /opt/requirements.txt -d /opt
+Install offline:-
+python3 -m pip install --no-index \
+--find-links=/opt \
+-r /opt/requirements.txt
