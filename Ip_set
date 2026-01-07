@@ -1,0 +1,26 @@
+#!/bin/bash
+
+hosts=(124 125 126 127 128 129)
+ips=(176 178 179 180 181 182)
+con_name="enp1s0d1"
+
+for n in "${!hosts[@]}"; do
+  remote="192.168.37.${hosts[$n]}"
+  ip="172.16.16.${ips[$n]}"
+
+  echo "$remote adding $ip"
+
+  ssh root@$remote <<EOF
+if nmcli -t -f NAME con show | grep -q "^$con_name\$"; then
+  echo "Connection exists"
+  nmcli con mod $con_name +ipv4.addresses $ip/24
+else
+  echo "Connection does not exist"
+  nmcli con add type ethernet con-name $con_name ifname $con_name \
+    ipv4.addresses $ip/24 ipv4.method manual autoconnect yes
+fi
+
+nmcli con up $con_name
+EOF
+
+done
