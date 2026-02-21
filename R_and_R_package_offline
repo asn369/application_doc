@@ -20,3 +20,20 @@ install.packages("C:/path/to/package/mypackage_1.0.0.tar.gz",
                  repos = NULL, 
                  type = "source")
 
+
+pkg_dir <- "/tmp/R_offline_packages"
+
+# For tar.gz packages
+pkg_files <- list.files(pkg_dir, pattern = "\\.tar\\.gz$", full.names = TRUE)
+for (pkg in pkg_files) {
+  install.packages(pkg, repos = NULL, type = "source")
+}
+
+
+for pkg in /tmp/R_offline_packages/*; do
+    if [ -d "$pkg" ]; then
+        R CMD INSTALL "$pkg"
+    fi
+done
+
+
