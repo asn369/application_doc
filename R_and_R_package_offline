@@ -14,3 +14,9 @@ install.packages(
   destdir = offline_path,    # folder to save packages
   repos = "https://cloud.r-project.org"  # CRAN mirror
 )
+
+# Replace the path with your actual file path
+install.packages("C:/path/to/package/mypackage_1.0.0.tar.gz", 
+                 repos = NULL, 
+                 type = "source")
+
