@@ -1,0 +1,16 @@
+sudo dnf download R R-devel R-java --resolve --alldeps --downloaddir=/tmp/R_complete_repo
+# Set local folder to save packages
+offline_path <- "/opt/R_offline_packages"
+dir.create(offline_path, showWarnings = FALSE)
+
+# Use a CRAN mirror (repo) to download packages and all dependencies
+pkgs <- c("dplyr", "data.table")
+
+# Download packages and dependencies as source
+install.packages(
+  pkgs,
+  dependencies = TRUE,       # ensures all required packages are included
+  type = "source",           # Linux source packages (.tar.gz)
+  destdir = offline_path,    # folder to save packages
+  repos = "https://cloud.r-project.org"  # CRAN mirror
+)
