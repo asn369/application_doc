@@ -1,0 +1,11 @@
+reposync -p /opt/9 \
+--download-metadata \
+--newest-only \
+--disablerepo="*" \
+--setopt=module_platform_id=platform:el9 \
+--repofrompath=rocky9-baseos,https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/ \
+--repofrompath=rocky9-appstream,https://download.rockylinux.org/pub/rocky/9/AppStream/x86_64/os/ \
+--repofrompath=rocky9-crb,https://download.rockylinux.org/pub/rocky/9/CRB/x86_64/os/ \
+--enablerepo=rocky9-baseos \
+--enablerepo=rocky9-appstream \
+--enablerepo=rocky9-crb
