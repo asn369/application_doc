@@ -8,3 +8,30 @@ python3.8 -m pip download \
 -r requirements.txt
 
 python3.12 -m pip install --no-index --find-links=. *.whl
+
+cat > requirements.txt <<EOF
+bcrypt
+certifi
+cffi
+charset-normalizer
+clickhouse-driver
+cryptography
+idna
+influxdb
+msgpack
+numpy
+pandas
+paramiko
+pycparser
+pynacl
+python-dateutil
+pytz
+requests
+semantic-version
+setuptools
+six
+tzdata
+tzlocal
+urllib3
+Cython
+EOF
