@@ -1,0 +1,46 @@
+#!/bin/bash
+SERVERS=(nfpga7)
+
+read -s -p "Enter sudo password: " SUDO_PASS
+echo
+
+REMOTE_SCRIPT=$(cat <<'REMOTE'
+TIKONA_INT=$(ip a | grep -B2 '172.16.16.' | awk '/BROADCAST/ {split($2, INT, ":")} /172\.16\.16\./ {split($2, IP, "/")} /link\/ether/ {mac=$2} END {print INT[1], IP[1], mac}')
+read -r INT IP MAC <<< "$TIKONA_INT"
+echo "Interface: $INT"
+echo "IP:        $IP"
+echo "MAC:       $MAC"
+if [[ -z "$INT" || -z "$IP" || -z "$MAC" ]]; then
+    echo "ERROR: Could not determine interface/IP/MAC"
+    exit 1
+fi
+ONBOOT="/usr/bin/onboot"
+for rule in \
+    "ip route add $IP/32 dev $INT scope link src $IP table 500" \
+    "ip rule add pref 100 lookup local" \
+    "ip rule del pref 0" \
+    "ip rule add pref 10 iif lo to $IP lookup 500" \
+    "ip neigh replace $IP lladdr $MAC dev $INT nud permanent"
+do
+    if grep -Fqx "$rule" "$ONBOOT"; then
+        echo "Already present: $rule"
+    else
+        echo "$rule" >> "$ONBOOT"
+        echo "Added: $rule"
+    fi
+done
+echo "Updated $ONBOOT"
+REMOTE
+)
+
+for i in "${SERVERS[@]}"; do
+    echo "=======$i========="
+    { echo "$SUDO_PASS"; echo "$REMOTE_SCRIPT"; } | ssh "$i" 'sudo -S bash -s' 2>/dev/null
+    if [[ $? -eq 0 ]]; then
+        echo "$i: SUCCESS"
+    else
+        echo "$i: FAILED"
+    fi
+done
+
+unset SUDO_PASS
