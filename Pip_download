@@ -1,7 +1,24 @@
 Download (with dependencies):-
 python3 -m pip download --only-binary=:all: \
--r /opt/requirements.txt -d /opt
+-r /opt/requirements.txt -d /opt/pip3.8
 Install offline:-
 python3 -m pip install --no-index \
 --find-links=/opt \
 -r /opt/requirements.txt
+
+python3.8 -m pip download -r /opt/requirements.txt -d /opt/pip3.8 --only-binary=:all:
+
+ cat -n /opt/requirements.txt
+     1  Cython
+     2  bcrypt
+     3  certifi
+     4  cffi
+     5  clickhouse-driver
+     6  cryptography
+     7  influxdb
+     8  paramiko
+     9  pycparser
+    10  pynacl
+    11  numpy
+    12  PyYAML
+    13  pandas
