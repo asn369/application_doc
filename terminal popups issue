@@ -57,3 +57,72 @@ If step 3 hangs, the kernel lock is blocking all network changes. In that case t
 To stop the popup messages meanwhile, use the sed + systemctl restart rsyslog step from earlier.
 
 
+If vlan113 is up but can’t ping, work through these checks in order. Each one rules out a common cause, and none of them need a reboot.
+
+1. Check the IP and routes
+bash
+ip addr show vlan113
+ip route
+
+Make sure the IP and prefix are correct and that there’s a route for the VLAN 113 subnet via vlan113. If any routes still point to the old enp2s0d1.113, delete them:
+
+bash
+ip route del <subnet> dev enp2s0d1.113
+2. Check whether ARP works
+bash
+ping -c 3 <GATEWAY>
+ip neigh show dev vlan113
+Result	Meaning
+REACHABLE or STALE with a MAC	Layer 2 works; the problem is routing or firewall, go to step 5
+FAILED or INCOMPLETE	Tagged packets aren’t getting through, go to step 3
+3. Watch the traffic on the physical port
+
+Run this in one terminal while pinging from another:
+
+bash
+tcpdump -i enp2s0d1 -nn -e vlan 113
+What you see	Meaning
+Only your ARP requests, no replies	Switch side issue (step 6) or NIC filtering (step 4)
+Replies appear here but ping still fails	The NIC/kernel is dropping them, go to step 4
+Nothing at all	Packets aren’t leaving, so recheck step 1
+4. Turn off the NIC’s VLAN filtering
+
+This is the most likely cause in your case. The stuck old interface may have left the Mellanox card’s hardware VLAN filter in a bad state, so it drops VLAN 113 traffic.
+
+bash
+ethtool -k enp2s0d1 | grep vlan
+ethtool -K enp2s0d1 rx-vlan-filter off
+
+If that doesn’t help, try promiscuous mode (accepts all frames):
+
+bash
+ip link set enp2s0d1 promisc on
+
+Ping again after each change.
+
+5. Check the firewall and reverse-path filter
+
+Temporarily relax these to test:
+
+bash
+sysctl -w net.ipv4.conf.all.rp_filter=0
+sysctl -w net.ipv4.conf.vlan113.rp_filter=0
+iptables -L -n -v | head -30
+
+If ping works with rp_filter=0, it’s a routing mismatch. If you have firewall rules mentioning enp2s0d1.113, they won’t match vlan113, so you need to add rules for the new name.
+
+6. Check the switch side
+
+Make sure the switch port is still a trunk with VLAN 113 allowed. Also clear the switch’s MAC or ARP entry for this server, in case it’s stale:
+
+bash
+arping -U -I vlan113 -c 3 <your-IP>    # announce your IP/MAC to the network
+7. Check for an IP conflict
+bash
+arping -D -I vlan113 -c 3 <your-IP>
+
+If any reply comes back, another device is using your IP.
+
+If it still doesn’t ping after these, send me the output of ip addr show vlan113, ip route, and what tcpdump shows during a ping, and I’ll help pinpoint it.
+
+
