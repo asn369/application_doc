@@ -1,0 +1,19 @@
+problem: In terminal popups coming
+kernel:unregister_netdevice: waiting for enp2s0d1.113 to become free. Usage count = 3863
+ kernel:unregister_netdevice: waiting for enp2s0d1.113 to become free. Usage count = 3863
+ kernel:unregister_netdevice: waiting for enp2s0d1.113 to become free. Usage count = 3863
+ kernel:unregister_netdevice: waiting for enp2s0d1.113 to become free. Usage count = 3863
+
+The two commands just flip it:
+
+Command	What it does
+sed -i 's/^\*\.emerg/#*.emerg/' /etc/rsyslog.conf	Adds #, turning popups OFF (use now, to stop the spam)
+sed -i 's/^#\*\.emerg/*.emerg/' /etc/rsyslog.conf	Removes #, turning popups ON (use after the reboot)
+
+After either one, run:
+
+bash
+systemctl restart rsyslog
+
+
+systemctl stop rsyslog   #, turning popups OFF (use now, to stop the spam)
