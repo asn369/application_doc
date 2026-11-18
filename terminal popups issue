@@ -17,3 +17,43 @@ systemctl restart rsyslog
 
 
 systemctl stop rsyslog   #, turning popups OFF (use now, to stop the spam)
+
+OK, you can get networking working without a reboot by creating a new VLAN interface with a different name. The old enp2s0d1.113 will stay stuck in the background (the log messages will continue), but the new one can carry your traffic.
+Important: some of these commands may hang if the kernel is still locked. Open a second SSH session (or console) first, so you have a backup if one terminal freezes.
+
+1. Get your IP settings from the old config
+bash
+cat /etc/sysconfig/network-scripts/ifcfg-enp2s0d1.113
+
+Note the IPADDR, PREFIX (or NETMASK), and GATEWAY values.
+
+2. Make sure the physical port is up
+bash
+ip link set enp2s0d1 up
+ip link show enp2s0d1
+
+You should see state UP.
+
+3. Create the new VLAN interface
+Use the same VLAN ID (113) with a different name:
+bash
+ip link add link enp2s0d1 name vlan113 type vlan id 113
+ip addr add <IPADDR>/<PREFIX> dev vlan113
+ip link set vlan113 up
+
+Example, if your IP is 10.10.113.20/24:
+
+bash
+ip addr add 10.10.113.20/24 dev vlan113
+4. Add the gateway route (only if this VLAN had the default gateway)
+bash
+ip route add default via <GATEWAY> dev vlan113
+
+
+Things to know
+Don’t run ifup or ifdown on enp2s0d1.113, and don’t restart the network service. That can hang or make things worse.
+This setup is temporary. It disappears on the next reboot, and at that point the original enp2s0d1.113 config will work normally again.
+If step 3 hangs, the kernel lock is blocking all network changes. In that case there’s no way to fix it without a reboot.
+To stop the popup messages meanwhile, use the sed + systemctl restart rsyslog step from earlier.
+
+
